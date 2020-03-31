@@ -1,2 +1,2 @@
-# ansible
-Brad's ansible playbooks
+# Ansible playbooks  
+In this repo I will host my Ansible playbooks. 

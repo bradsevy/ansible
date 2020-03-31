@@ -1,0 +1,131 @@
+[org/gnome/settings-daemon/plugins/xsettings]
+antialiasing='grayscale'
+hinting='slight'
+
+[org/gnome/settings-daemon/peripherals/keyboard]
+numlock-state='off'
+
+[org/gnome/shell]
+app-picker-view=uint32 1
+favorite-apps=['firefox.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Nautilus.desktop', 'atom.desktop', 'org.gnome.Terminal.desktop']
+enable-hot-corners=true
+
+[org/gnome/nautilus/preferences]
+default-folder-viewer='icon-view'
+search-filter-time-type='last_modified'
+
+[org/gnome/nautilus/window-state]
+geometry='890x550+26+23'
+maximized=false
+
+[org/gnome/evolution-data-server]
+network-monitor-gio-name=''
+migrated=true
+
+[org/gnome/desktop/interface]
+clock-show-date=false
+gtk-im-module='gtk-im-context-simple'
+show-battery-percentage=true
+icon-theme='Papirus-Adapta'
+gtk-theme='Adwaita-dark'
+
+[org/gnome/desktop/notifications]
+application-children=['update-manager']
+
+[org/gnome/desktop/notifications/application/update-manager]
+application-id='update-manager.desktop'
+
+[org/gnome/desktop/app-folders]
+folder-children=['Productivity', 'Utilities', 'Sundry', 'YaST']
+
+[org/gnome/desktop/app-folders/folders/Productivity]
+translate=false
+categories=@as []
+apps=['libreoffice-draw.desktop', 'libreoffice-startcenter.desktop', 'libreoffice-impress.desktop', 'libreoffice-base.desktop', 'libreoffice-calc.desktop', 'libreoffice-writer.desktop', 'libreoffice-math.desktop']
+excluded-apps=@as []
+name='Productivity'
+
+[org/gnome/desktop/app-folders/folders/Utilities]
+translate=true
+categories=['X-GNOME-Utilities']
+apps=['gnome-system-log.desktop', 'deja-dup-preferences.desktop', 'org.gnome.Screenshot.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.FileRoller.desktop', 'org.gnome.DiskUtility.desktop', 'htop.desktop', 'org.gnome.baobab.desktop', 'io.snapcraft.core-99T7MUlRhtI3U0QFgl5mXXESAiSwt776', 'org.gnome.FileRoller', 'vinagre.desktop', 'org.gnome.gedit.desktop', 'update-manager.desktop', 'org.gnome.Software.desktop', 'gucharmap.desktop', 'software-properties-gtk.desktop', 'org.gnome.Terminal.desktop', 'gnome-system-monitor.desktop', 'im-config.desktop', 'seahorse.desktop', 'vim.desktop', 'io.snapcraft.gnome-calculator-J8OcDPQ0JM8dbvk29HRqpWVI9kBw0atG', 'org.gnome.font-viewer.desktop', 'io.snapcraft.gnome-system-monitor-9BTClmjz31r0UltmbJ5nnGe0Xm1AzfMp', 'yelp.desktop', 'gnome-control-center.desktop', 'system-config-printer.desktop', 'gnome-calculator.desktop', 'gnome-session-properties.desktop', 'org.gnome.Characters.desktop', 'table.xml', 'eog.desktop', 'gnome-dictionary.desktop', 'evince.desktop', 'io.snapcraft.gnome-3-28-1804-TKv5Fm000l4XiUYJW9pjWHLkCPlDbIg1', 'io.snapcraft.gtk-common-themes-jZLfBRzf1cYlYysIjD2bwSzNtngY0qit', 'io.snapcraft.gnome-logs-kIMfmZTJspWa8vtfbgU3W9Nbv4V5Qgmh', 'gnome-tweak-tool.desktop', 'ibus-setup.desktop', 'io.snapcraft.gnome-characters-qJcS3UjpF9AMJKWAiKwA5EWbm0y6Uduw', 'org.gnome.PowerStats.desktop']
+excluded-apps=@as []
+name='X-GNOME-Utilities.directory'
+
+[org/gnome/desktop/app-folders/folders/Sundry]
+translate=true
+categories=['X-GNOME-Sundry']
+apps=['java-1.7.0-openjdk-jconsole.desktop', 'ca.desrt.dconf-editor.desktop', 'nm-connection-editor.desktop', 'ibus-setup-libbopomofo.desktop', 'im-chooser.desktop', 'system-config-language.desktop', 'javaws.desktop', 'firewall-config.desktop', 'ibus-setup-anthy.desktop', 'gconf-editor.desktop', 'ibus-setup-m17n.desktop', 'setroubleshoot.desktop', 'flash-player-properties.desktop', 'system-config-users.desktop', 'system-config-firewall.desktop', 'jhbuild.desktop', 'itweb-settings.desktop', 'authconfig.desktop', 'gnome-power-statistics.desktop', 'fedora-release-notes.desktop', 'ibus-setup-libpinyin.desktop', 'gnome-abrt.desktop', 'ibus-setup-typing-booster.desktop', 'system-config-date.desktop', 'log4j-logfactor5.desktop', 'alacarte.desktop', 'java-1.7.0-openjdk-policytool.desktop', 'log4j-chainsaw.desktop', 'system-config-keyboard.desktop', 'orca.desktop', 'vino-preferences.desktop', 'ibus-setup-hangul.desktop']
+excluded-apps=@as []
+name='X-GNOME-Sundry.directory'
+
+[org/gnome/desktop/app-folders/folders/YaST]
+translate=true
+categories=['X-SuSE-YaST']
+apps=@as []
+excluded-apps=@as []
+name='suse-yast.directory'
+
+[org/gnome/desktop/screensaver]
+picture-uri='file:///usr/share/backgrounds/Mr._Tau_and_The_Tree_-_by_TJ.jpg'
+color-shading-type='solid'
+primary-color='#000000'
+picture-options='zoom'
+secondary-color='#000000'
+
+[org/gnome/desktop/peripherals/touchpad]
+tap-to-click=true
+
+[org/gnome/desktop/wm/preferences]
+button-layout='appmenu:minimize,maximize,close'
+
+[org/gnome/desktop/background]
+picture-uri='file:///usr/share/backgrounds/Stalking_Ocelot_by_Sayantan_Chaudhuri.jpg'
+color-shading-type='solid'
+primary-color='#000000'
+picture-options='zoom'
+secondary-color='#000000'
+
+[org/gnome/desktop/input-sources]
+sources=[('xkb', 'us')]
+xkb-options=@as []
+
+[org/gnome/control-center]
+last-panel='background'
+
+[org/gnome/terminal/legacy]
+schema-version=uint32 3
+
+[org/gnome/software]
+first-run=false
+check-timestamp=int64 1583062227
+
+[org/gnome/gnome-system-monitor]
+show-dependencies=false
+maximized=false
+show-whose-processes='user'
+window-state=(700, 500, 26, 23)
+
+[org/gnome/gnome-system-monitor/disktreenew]
+col-6-visible=true
+col-6-width=0
+
+[org/gtk/settings/file-chooser]
+sort-column='name'
+sidebar-width=163
+window-position=(82, 27)
+show-size-column=true
+show-hidden=false
+window-size=(1203, 694)
+sort-directories-first=false
+date-format='regular'
+sort-order='ascending'
+location-mode='path-bar'
+
+[apps/update-manager]
+first-run=false
+launch-time=int64 1583008850
+launch-count=1
+
+[com/ubuntu/update-notifier]
+release-check-time=uint32 1583008846

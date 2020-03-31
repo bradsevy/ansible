@@ -1,0 +1,93 @@
+- hosts: localhost
+  connection: local
+  vars:
+  vars_prompt:
+
+    - name: user
+      prompt: "What is the name of the account you wish to create?"
+      private: no
+
+    - name: password
+      prompt: "Enter the password to be applied to the account."
+
+  tasks:
+
+  - name: Install apps
+    ignore_errors: yes
+    apt:
+      update_cache: yes
+      name: vim,htop,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,libreoffice,ansible,git,screen,vim-gtk
+      state: present
+
+## These snaps are installed separately because the '--classic' confinement can only support one package at a time.
+  - name: Install Spotify as snap package
+    snap:
+      name: spotify
+      state: present
+
+  - name: Install Slack as snap package
+    snap:
+      name: slack
+      state: present
+      classic: yes
+
+  - name: Install Atom as a snap package
+    snap:
+      name: atom
+      state: present
+      classic: yes
+
+## User being created with variables input at first prompts.
+  - name: Add the user "{{ user }}"
+    user:
+      name: "{{ user }}"
+      groups: sudo
+      create_home: yes
+      shell: /bin/bash
+
+  - name: Set user password
+    expect:
+      command: /bin/bash -c 'passwd "{{ user }}"'
+      responses:
+        password: "{{ password }}"
+        password: "{{ password }}"
+
+## Comment out if not running against desktop.
+  - name: Start TLP for power savings
+    service:
+      name: tlp
+      state: started
+      enabled: yes
+
+## For iMac with AMD GPU. Running through shell because service module does not support mask.
+  - name: Disable sleep, suspend, hibernate, and hybrid-sleep
+    shell: sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
+  - name: Set GNOME preferences.
+    copy:
+      src: "files/brad-settings.dconf"
+      dest: /home/{{ user }}/saved_settings.dconf
+      owner: "{{ user }}"
+      mode: '0644'
+      group: "{{ user }}"
+
+  - name: Brad no-password sudo
+    copy:
+      src: "files/brad-sudo"
+      dest: /etc/sudoers.d/
+      owner: root
+      mode: '0644'
+
+  - name: Config folder in new home directory.
+    file:
+      path: "/home/{{ user }}/.config"
+      state: directory
+      owner: "{{ user }}"
+
+## This keeps the user from having to click through the GNOME introduction.
+  - name: Touch gnome-initial-setup-done
+    file:
+      path: "/home/{{ user }}/.config/gnome-initial-setup-done"
+      state: touch
+      owner: "{{ user }}"
+      mode: '0644'
