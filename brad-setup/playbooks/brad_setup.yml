@@ -11,31 +11,41 @@
       prompt: "Enter the password to be applied to the account."
 
   tasks:
+  
+  - name: Add Spotify repo
+    apt_repository:
+      repo: 'deb http://repository.spotify.com stable non-free'
+      state: present
+     
+  - name: Add Spotify repo key
+    apt_key:
+      keyserver: 'hkp://keyserver.ubuntu.com:80'
+      id: 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
+      state: present
+      file: spotify
+      
+  - name: Add Atom repo key
+    apt_key:
+      url: 'https://packagecloud.io/AtomEditor/atom/gpgkey'
+      state: present
 
+  - name: install atom repo
+    apt_repository:
+      repo: deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main
+      filename: atom
+      state: present
+      
+  - name: Add Atom repo
+    apt_repository:
+      repo: deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main
+      state: present
+ 
   - name: Install apps
     ignore_errors: yes
     apt:
       update_cache: yes
-      name: vim,htop,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,libreoffice,ansible,git,screen,vim-gtk
+      name: vim,htop,atom,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,libreoffice,ansible,git,screen,vim-gtk
       state: present
-
-## These snaps are installed separately because the '--classic' confinement can only support one package at a time.
-  - name: Install Spotify as snap package
-    snap:
-      name: spotify
-      state: present
-
-  - name: Install Slack as snap package
-    snap:
-      name: slack
-      state: present
-      classic: yes
-
-  - name: Install Atom as a snap package
-    snap:
-      name: atom
-      state: present
-      classic: yes
 
 ## User being created with variables input at first prompts.
   - name: Add the user "{{ user }}"
@@ -43,7 +53,7 @@
       name: "{{ user }}"
       groups: sudo
       create_home: yes
-      shell: /bin/bash
+      shell: /bin/zsh
 
   - name: Set user password
     expect:
@@ -59,10 +69,6 @@
       state: started
       enabled: yes
 
-## For iMac with AMD GPU. Running through shell because service module does not support mask.
-  - name: Disable sleep, suspend, hibernate, and hybrid-sleep
-    shell: sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target
-
   - name: Set GNOME preferences.
     copy:
       src: "files/brad-settings.dconf"
@@ -77,6 +83,13 @@
       dest: /etc/sudoers.d/
       owner: root
       mode: '0644'
+      
+   - name: ZSH config
+     copy:
+       src: "files/zshrc"
+       dest: /home/{{ home }}/.zshrc
+       owner: {{ user }}
+       mode: '0644'
 
   - name: Config folder in new home directory.
     file:
