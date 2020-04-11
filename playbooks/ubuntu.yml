@@ -15,12 +15,12 @@
     apt_key:
       url: "https://download.spotify.com/debian/pubkey.gpg"
       state: present
-      
+
   - name: Add Atom repo key
     apt_key:
       url: 'https://packagecloud.io/AtomEditor/atom/gpgkey'
       state: present
-  
+
   - name: Add Spotify repo
     apt_repository:
       repo: 'deb http://repository.spotify.com stable non-free'
@@ -31,7 +31,7 @@
       repo: deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main
       filename: atom
       state: present
- 
+
   - name: Install apps
     ignore_errors: yes
     apt:
@@ -67,7 +67,7 @@
       enabled: yes
 
   - name: Enable sshd
-    service: 
+    service:
       name: sshd
       state: started
       enabled: yes
@@ -84,7 +84,7 @@
     lineinfile:
       path: /etc/sudoers.d/{{ user }}
       line: '"{{ user }}" ALL=(ALL:ALL) NOPASSWD: ALL'
-      create: yes 
+      create: yes
       validate: /usr/sbin/visudo -csf %s
 
   - name: ZSH config
@@ -99,7 +99,7 @@
       src: "files/zsh"
       dest: /usr/share/
 
-  - name: Set stock GNOME as default session for user
+  - name: Set stock GNOME as default session for {{ user }} 
     copy:
       src: "files/brad-default-session"
       dest: /var/lib/AccountServices/users/{{ user }}/{{ user }}-default-session
