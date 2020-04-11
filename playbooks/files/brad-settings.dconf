@@ -1,0 +1,167 @@
+[apps/update-manager]
+first-run=false
+launch-count=2
+launch-time=int64 1586627488
+
+[com/ubuntu/update-notifier]
+release-check-time=uint32 1586627606
+
+[desktop/ibus/general]
+preload-engines=['xkb:us::eng']
+version='1.5.21'
+
+[org/gnome/control-center]
+last-panel='background'
+
+[org/gnome/desktop/app-folders]
+folder-children=['Productivity', 'Utilities', 'Sundry', 'YaST']
+
+[org/gnome/desktop/app-folders/folders/Productivity]
+apps=['libreoffice-draw.desktop', 'libreoffice-startcenter.desktop', 'libreoffice-impress.desktop', 'libreoffice-base.desktop', 'libreoffice-calc.desktop', 'libreoffice-writer.desktop', 'libreoffice-math.desktop']
+categories=@as []
+excluded-apps=@as []
+name='Productivity'
+translate=false
+
+[org/gnome/desktop/app-folders/folders/Sundry]
+apps=['java-1.7.0-openjdk-jconsole.desktop', 'ca.desrt.dconf-editor.desktop', 'nm-connection-editor.desktop', 'ibus-setup-libbopomofo.desktop', 'im-chooser.desktop', 'system-config-language.desktop', 'javaws.desktop', 'firewall-config.desktop', 'ibus-setup-anthy.desktop', 'gconf-editor.desktop', 'ibus-setup-m17n.desktop', 'setroubleshoot.desktop', 'flash-player-properties.desktop', 'system-config-users.desktop', 'system-config-firewall.desktop', 'jhbuild.desktop', 'itweb-settings.desktop', 'authconfig.desktop', 'gnome-power-statistics.desktop', 'fedora-release-notes.desktop', 'ibus-setup-libpinyin.desktop', 'gnome-abrt.desktop', 'ibus-setup-typing-booster.desktop', 'system-config-date.desktop', 'log4j-logfactor5.desktop', 'alacarte.desktop', 'java-1.7.0-openjdk-policytool.desktop', 'log4j-chainsaw.desktop', 'system-config-keyboard.desktop', 'orca.desktop', 'vino-preferences.desktop', 'ibus-setup-hangul.desktop']
+categories=['X-GNOME-Sundry']
+excluded-apps=@as []
+name='X-GNOME-Sundry.directory'
+translate=true
+
+[org/gnome/desktop/app-folders/folders/Utilities]
+apps=['gnome-system-log.desktop', 'deja-dup-preferences.desktop', 'org.gnome.Screenshot.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.FileRoller.desktop', 'org.gnome.DiskUtility.desktop', 'htop.desktop', 'org.gnome.baobab.desktop', 'io.snapcraft.core-99T7MUlRhtI3U0QFgl5mXXESAiSwt776', 'org.gnome.FileRoller', 'vinagre.desktop', 'org.gnome.gedit.desktop', 'update-manager.desktop', 'org.gnome.Software.desktop', 'gucharmap.desktop', 'software-properties-gtk.desktop', 'org.gnome.Terminal.desktop', 'gnome-system-monitor.desktop', 'im-config.desktop', 'seahorse.desktop', 'vim.desktop', 'io.snapcraft.gnome-calculator-J8OcDPQ0JM8dbvk29HRqpWVI9kBw0atG', 'org.gnome.font-viewer.desktop', 'io.snapcraft.gnome-system-monitor-9BTClmjz31r0UltmbJ5nnGe0Xm1AzfMp', 'yelp.desktop', 'gnome-control-center.desktop', 'system-config-printer.desktop', 'gnome-calculator.desktop', 'gnome-session-properties.desktop', 'org.gnome.Characters.desktop', 'table.xml', 'eog.desktop', 'gnome-dictionary.desktop', 'evince.desktop', 'io.snapcraft.gnome-3-28-1804-TKv5Fm000l4XiUYJW9pjWHLkCPlDbIg1', 'io.snapcraft.gtk-common-themes-jZLfBRzf1cYlYysIjD2bwSzNtngY0qit', 'io.snapcraft.gnome-logs-kIMfmZTJspWa8vtfbgU3W9Nbv4V5Qgmh', 'gnome-tweak-tool.desktop', 'ibus-setup.desktop', 'io.snapcraft.gnome-characters-qJcS3UjpF9AMJKWAiKwA5EWbm0y6Uduw', 'org.gnome.PowerStats.desktop']
+categories=['X-GNOME-Utilities']
+excluded-apps=@as []
+name='X-GNOME-Utilities.directory'
+translate=true
+
+[org/gnome/desktop/app-folders/folders/YaST]
+apps=@as []
+categories=['X-SuSE-YaST']
+excluded-apps=@as []
+name='suse-yast.directory'
+translate=true
+
+[org/gnome/desktop/background]
+color-shading-type='solid'
+picture-options='zoom'
+picture-uri='file:///usr/share/backgrounds/Stalking_Ocelot_by_Sayantan_Chaudhuri.jpg'
+primary-color='#000000'
+secondary-color='#000000'
+
+[org/gnome/desktop/input-sources]
+sources=[('xkb', 'us')]
+xkb-options=@as []
+
+[org/gnome/desktop/interface]
+clock-show-date=false
+cursor-theme='Yaru'
+gtk-im-module='ibus'
+gtk-theme='Yaru-dark'
+icon-theme='Papirus'
+show-battery-percentage=true
+
+[org/gnome/desktop/notifications]
+application-children=['update-manager', 'org-gnome-software']
+
+[org/gnome/desktop/notifications/application/org-gnome-software]
+application-id='org.gnome.Software.desktop'
+
+[org/gnome/desktop/notifications/application/update-manager]
+application-id='update-manager.desktop'
+
+[org/gnome/desktop/peripherals/touchpad]
+tap-to-click=true
+
+[org/gnome/desktop/privacy]
+disable-microphone=false
+report-technical-problems=true
+
+[org/gnome/desktop/screensaver]
+color-shading-type='solid'
+picture-options='zoom'
+picture-uri='file:///usr/share/backgrounds/Mr._Tau_and_The_Tree_-_by_TJ.jpg'
+primary-color='#000000'
+secondary-color='#000000'
+
+[org/gnome/desktop/sound]
+allow-volume-above-100-percent=false
+
+[org/gnome/desktop/wm/preferences]
+button-layout='appmenu:minimize,maximize,close'
+
+[org/gnome/evolution-data-server]
+migrated=true
+network-monitor-gio-name=''
+
+[org/gnome/gedit/plugins]
+active-plugins=['filebrowser', 'docinfo', 'time', 'modelines', 'spell']
+
+[org/gnome/gedit/plugins/filebrowser]
+root='file:///'
+tree-view=true
+virtual-root='file:///home/brad/Downloads/ansible-working/brad-setup/playbooks'
+
+[org/gnome/gedit/preferences/ui]
+show-tabs-mode='auto'
+
+[org/gnome/gedit/state/window]
+bottom-panel-size=140
+side-panel-active-page='GeditWindowDocumentsPanel'
+side-panel-size=200
+size=(900, 700)
+state=87168
+
+[org/gnome/gnome-system-monitor]
+maximized=false
+show-dependencies=false
+show-whose-processes='user'
+window-state=(700, 500, 26, 23)
+
+[org/gnome/gnome-system-monitor/disktreenew]
+col-6-visible=true
+col-6-width=0
+
+[org/gnome/nautilus/preferences]
+default-folder-viewer='icon-view'
+search-filter-time-type='last_modified'
+
+[org/gnome/nautilus/window-state]
+geometry='890x550+26+23'
+maximized=false
+
+[org/gnome/settings-daemon/peripherals/keyboard]
+numlock-state='off'
+
+[org/gnome/settings-daemon/plugins/xsettings]
+antialiasing='grayscale'
+hinting='slight'
+
+[org/gnome/shell]
+app-picker-view=uint32 1
+enable-hot-corners=true
+favorite-apps=['firefox.desktop', 'org.gnome.Evolution.desktop', 'org.gnome.Nautilus.desktop', 'spotify.desktop', 'atom.desktop', 'org.gnome.Terminal.desktop']
+
+[org/gnome/software]
+check-timestamp=int64 1586627783
+first-run=false
+
+[org/gnome/system/location]
+enabled=false
+
+[org/gnome/terminal/legacy]
+schema-version=uint32 3
+
+[org/gtk/settings/file-chooser]
+date-format='regular'
+location-mode='path-bar'
+show-hidden=false
+show-size-column=true
+sidebar-width=163
+sort-column='name'
+sort-directories-first=false
+sort-order='ascending'
+window-position=(82, 27)
+window-size=(1203, 694)

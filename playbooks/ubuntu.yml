@@ -1,0 +1,122 @@
+- hosts: localhost
+  connection: local
+  vars:
+  vars_prompt:
+
+    - name: user
+      prompt: "What is the name of the account you wish to create?"
+      private: no
+
+    - name: password
+      prompt: "Enter the password to be applied to the account."
+
+  tasks:
+  - name: Add Spotify repo key
+    apt_key:
+      url: "https://download.spotify.com/debian/pubkey.gpg"
+      state: present
+      
+  - name: Add Atom repo key
+    apt_key:
+      url: 'https://packagecloud.io/AtomEditor/atom/gpgkey'
+      state: present
+  
+  - name: Add Spotify repo
+    apt_repository:
+      repo: 'deb http://repository.spotify.com stable non-free'
+      state: present
+
+  - name: Add Atom repo
+    apt_repository:
+      repo: deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main
+      filename: atom
+      state: present
+ 
+  - name: Install apps
+    ignore_errors: yes
+    apt:
+      update_cache: yes
+      name: vim,htop,atom,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,libreoffice,ansible,git,screen,vim-gtk,openssh-server
+      state: present
+
+  - name: Apt upgrade
+    apt:
+      upgrade: yes
+      autoremove: yes
+
+## User being created with variables input at first prompts.
+  - name: Add the user "{{ user }}"
+    user:
+      name: "{{ user }}"
+      groups: sudo
+      create_home: yes
+      shell: /bin/zsh
+
+  - name: Set user password
+    expect:
+      command: /bin/bash -c 'passwd "{{ user }}"'
+      responses:
+        password: "{{ password }}"
+        password: "{{ password }}"
+
+## Comment out if not running against desktop.
+  - name: Start TLP for power savings
+    service:
+      name: tlp
+      state: started
+      enabled: yes
+
+  - name: Enable sshd
+    service: 
+      name: sshd
+      state: started
+      enabled: yes
+
+  - name: Set GNOME preferences.
+    copy:
+      src: "files/brad-settings.dconf"
+      dest: /home/{{ user }}/saved_settings.dconf
+      owner: "{{ user }}"
+      mode: '0644'
+      group: "{{ user }}"
+
+  - name: No-password sudo
+    lineinfile:
+      path: /etc/sudoers.d/{{ user }}
+      line: '"{{ user }}" ALL=(ALL:ALL) NOPASSWD: ALL'
+      create: yes 
+      validate: /usr/sbin/visudo -csf %s
+
+  - name: ZSH config
+    copy:
+      src: "files/zshrc"
+      dest: /home/{{ user }}/.zshrc
+      owner: "{{ user }}"
+      mode: '0644'
+
+  - name: ZSH plugins
+    synchronize:
+      src: "files/zsh"
+      dest: /usr/share/
+
+  - name: Set stock GNOME as default session for user
+    copy:
+      src: "files/brad-default-session"
+      dest: /var/lib/AccountServices/users/{{ user }}/{{ user }}-default-session
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: Config folder in new home directory.
+    file:
+      path: "/home/{{ user }}/.config"
+      state: directory
+      owner: "{{ user }}"
+
+## This keeps the user from having to click through the GNOME introduction.
+  - name: Touch gnome-initial-setup-done
+    file:
+      path: "/home/{{ user }}/.config/gnome-initial-setup-done"
+      state: touch
+      owner: "{{ user }}"
+      mode: '0644'
