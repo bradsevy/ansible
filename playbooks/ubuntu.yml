@@ -16,9 +16,14 @@
       url: "https://download.spotify.com/debian/pubkey.gpg"
       state: present
 
-  - name: Add Atom repo key
+#  - name: Add Atom repo key
+#    apt_key:
+#      url: 'https://packagecloud.io/AtomEditor/atom/gpgkey'
+#      state: present
+
+  -name: Add VSCode repository
     apt_key:
-      url: 'https://packagecloud.io/AtomEditor/atom/gpgkey'
+      url: 'https://packages.microsoft.com/keys/microsoft.asc'
       state: present
 
   - name: Add Spotify repo
@@ -26,18 +31,23 @@
       repo: 'deb http://repository.spotify.com stable non-free'
       state: present
 
-  - name: Add Atom repo
+  - name: Add VSCode repository
     apt_repository:
-      repo: deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main
-      filename: atom
+      repo: 'deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main'
       state: present
+
+#  - name: Add Atom repo
+#    apt_repository:
+#      repo: deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main
+#      filename: atom
+#      state: present
 
   - name: Add elementaryOS PPA (Ubuntu only)
     ignore_errors: yes
       apt_repository:
       repo: ppa:elementary-os/stable
 
-  - name: Upgrade esisting packages, clear unused dependencies
+  - name: Upgrade existing packages, clear unused dependencies
     apt:
       upgrade: yes
       autoremove: yes
@@ -46,7 +56,7 @@
     ignore_errors: yes
     apt:
       update_cache: yes
-      name: vim,htop,atom,alac-decoder,ubuntu-restricted-extras,noise,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,libreoffice,ansible,git,screen,vim-gtk,openssh-server
+      name: vim,htop,code,alac-decoder,ubuntu-restricted-extras,noise,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,libreoffice,ansible,git,screen,vim-gtk,openssh-server
       state: present
 
 ## User being created with variables input at first prompts.
