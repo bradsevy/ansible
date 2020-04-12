@@ -32,6 +32,11 @@
       filename: atom
       state: present
 
+  - name: Add elementaryOS PPA (Ubuntu only)
+    ignore_errors: yes
+      apt_repository:
+      repo: ppa:elementary-os/stable
+
   - name: Upgrade esisting packages, clear unused dependencies
     apt:
       upgrade: yes
@@ -41,7 +46,7 @@
     ignore_errors: yes
     apt:
       update_cache: yes
-      name: vim,htop,atom,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,libreoffice,ansible,git,screen,vim-gtk,openssh-server
+      name: vim,htop,atom,alac-decoder,ubuntu-restricted-extras,noise,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,libreoffice,ansible,git,screen,vim-gtk,openssh-server
       state: present
 
 ## User being created with variables input at first prompts.
@@ -119,3 +124,8 @@
       state: touch
       owner: "{{ user }}"
       mode: '0644'
+
+  - name: Clean up 'df' output by excludinh snap and tmpfs from output
+    lineinfile:
+      path: /home/{{ user }}/.zshrc
+      line: alias dfh='df -h -x squashfs -x tmpfs'
