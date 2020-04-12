@@ -32,17 +32,17 @@
       filename: atom
       state: present
 
-  - name: Install apps
+  - name: Upgrade esisting packages, clear unused dependencies
+    apt:
+      upgrade: yes
+      autoremove: yes
+
+  - name: Install apps, ignoring errors
     ignore_errors: yes
     apt:
       update_cache: yes
       name: vim,htop,atom,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,libreoffice,ansible,git,screen,vim-gtk,openssh-server
       state: present
-
-  - name: Apt upgrade
-    apt:
-      upgrade: yes
-      autoremove: yes
 
 ## User being created with variables input at first prompts.
   - name: Add the user "{{ user }}"
@@ -60,19 +60,19 @@
         password: "{{ password }}"
 
 ## Comment out if not running against desktop.
-  - name: Start TLP for power savings
+  - name: Start TLP for power savings on portable computers
     service:
       name: tlp
       state: started
       enabled: yes
 
-  - name: Enable sshd
+  - name: Enable sshd for SSHing into this computer
     service:
       name: sshd
       state: started
       enabled: yes
 
-  - name: Set GNOME preferences.
+  - name: Set GNOME preferences. Separately run "dconf load / < saved_settings" to take affect
     copy:
       src: "files/brad-settings.dconf"
       dest: /home/{{ user }}/saved_settings.dconf
@@ -80,26 +80,26 @@
       mode: '0644'
       group: "{{ user }}"
 
-  - name: No-password sudo
+  - name: Implement no-password sudo
     lineinfile:
       path: /etc/sudoers.d/{{ user }}
       line: '"{{ user }}" ALL=(ALL:ALL) NOPASSWD: ALL'
       create: yes
       validate: /usr/sbin/visudo -csf %s
 
-  - name: ZSH config
+  - name: Placing .zshrc in new user's home directory
     copy:
       src: "files/zshrc"
       dest: /home/{{ user }}/.zshrc
       owner: "{{ user }}"
       mode: '0644'
 
-  - name: ZSH plugins
+  - name: Importing Manjaro's excellent ZSH plugins to make your life better
     synchronize:
       src: "files/zsh"
       dest: /usr/share/
 
-  - name: Set stock GNOME as default session for {{ user }} 
+  - name: Creating GDM preference to set stock GNOME as default session for {{ user }}
     copy:
       src: "files/brad-default-session"
       dest: /var/lib/AccountServices/users/{{ user }}/{{ user }}-default-session
@@ -107,14 +107,13 @@
       group: root
       mode: '0644'
 
-  - name: Config folder in new home directory.
+  - name: Create .config folder in home directory to place setup-done file
     file:
       path: "/home/{{ user }}/.config"
       state: directory
       owner: "{{ user }}"
 
-## This keeps the user from having to click through the GNOME introduction.
-  - name: Touch gnome-initial-setup-done
+  - name: Touch gnome-initial-setup-done in /home/{{ user }}/.config. This will allow the new account to slip the GNOME setup prompt.
     file:
       path: "/home/{{ user }}/.config/gnome-initial-setup-done"
       state: touch
