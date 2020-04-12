@@ -21,7 +21,7 @@
 #      url: 'https://packagecloud.io/AtomEditor/atom/gpgkey'
 #      state: present
 
-  -name: Add VSCode repository
+  - name: Add VSCode repository
     apt_key:
       url: 'https://packages.microsoft.com/keys/microsoft.asc'
       state: present
@@ -44,8 +44,9 @@
 
   - name: Add elementaryOS PPA (Ubuntu only)
     ignore_errors: yes
-      apt_repository:
+    apt_repository:
       repo: ppa:elementary-os/stable
+      state: present
 
   - name: Upgrade existing packages, clear unused dependencies
     apt:
