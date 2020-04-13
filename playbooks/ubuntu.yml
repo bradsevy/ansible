@@ -57,7 +57,7 @@
     ignore_errors: yes
     apt:
       update_cache: yes
-      name: vim,htop,code,alac-decoder,ubuntu-restricted-extras,noise,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,libreoffice,ansible,git,screen,vim-gtk,openssh-server
+      name: vim,htop,code,alac-decoder,ubuntu-restricted-extras,noise,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,evolution-ews,libreoffice,ansible,git,screen,vim-gtk,openssh-server
       state: present
 
 ## User being created with variables input at first prompts.
