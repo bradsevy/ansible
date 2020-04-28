@@ -43,7 +43,7 @@
     ignore_errors: yes
     apt:
       update_cache: yes
-      name: rsync,vim,htop,atom,zsh,python-pexpect,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,evolution,libreoffice,ansible,git,screen,vim-gtk,openssh-server
+      name: rsync,vim,htop,atom,zsh,python-pexpect,tlp,tlp-rdw,papirus-icon-theme,spotify-client,evolution,libreoffice,ansible,git,screen,vim-gtk,openssh-server,neofetch
       state: present
 
 ## User being created with variables input at first prompts.
