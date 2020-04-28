@@ -29,6 +29,11 @@
       filename: atom
       state: present
 
+  - name: Remove unwanted pre-installed apps
+    apt:
+      name: gnome-calendar,gnome-clocks,gnome-color-manager,gnome-contacts,gnome-font-viewer,gnome-maps,gnome-music,gnome-sound-recorder,gnome-todo,gnome-weather,shotwell,rhythmbox,simple-scan,vinagre,aisleriot,five-or-more,four-in-a-row,gnome-chess,gnome-klotski,gnome-mahjongg,gnome-nibbles,gnome-robots,gnome-tetravex,hitori,hoichess,iagno,lightsoff,quadrapassell,swell-foop,tali
+      state: absent
+
   - name: Upgrade existing packages, clear unused dependencies
     apt:
       upgrade: yes
