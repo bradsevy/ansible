@@ -1,0 +1,58 @@
+- hosts: localhost
+  connection: local
+  vars:
+  vars_prompt:
+
+    - name: user
+      prompt: "What is the name of the account you wish to create?"
+      private: no
+
+  tasks:
+  - name: Upgrade existing packages, clear unused dependencies
+    apt:
+      upgrade: yes
+      autoremove: yes
+
+  - name: Install apps, ignoring errors
+    ignore_errors: yes
+    apt:
+      update_cache: yes
+      name: vim,htop,code,alac-decoder,ubuntu-restricted-extras,noise,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,evolution-ews,libreoffice,ansible,git,screen,vim-gtk,openssh-server
+      state: present
+
+## Comment out if not running against desktop.
+  - name: Start TLP for power savings on portable computers
+    service:
+      name: tlp
+      state: started
+      enabled: yes
+
+  - name: Enable sshd for SSHing into this computer
+    service:
+      name: sshd
+      state: started
+      enabled: yes
+
+  - name: Implement no-password sudo
+    lineinfile:
+      path: /etc/sudoers.d/{{ user }}
+      line: '"{{ user }}" ALL=(ALL:ALL) NOPASSWD: ALL'
+      create: yes
+      validate: /usr/sbin/visudo -csf %s
+
+  - name: Placing .zshrc in new user's home directory
+    copy:
+      src: "files/zshrc"
+      dest: /home/{{ user }}/.zshrc
+      owner: "{{ user }}"
+      mode: '0644'
+
+  - name: Importing Manjaro's excellent ZSH plugins to make your life better
+    synchronize:
+      src: "files/zsh"
+      dest: /usr/share/
+
+  - name: Clean up 'df' output by excluding snap and tmpfs from output
+    lineinfile:
+      path: /home/{{ user }}/.zshrc
+      line: alias dfh='df -h -x squashfs -x tmpfs'
