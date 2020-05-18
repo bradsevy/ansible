@@ -30,7 +30,15 @@
   - name: Install Spotify, Libreoffice, and Firefox Flatpak packages
     flatpak:
       name: https://flathub.org/repo/appstream/com.spotify.Client.flatpakref
+      state: present
+      method: system
+
+  - flatpak:
       name: https://flathub.org/repo/appstream/org.libreoffice.LibreOffice.flatpakref
+      state: present
+      method: system
+
+  - flatpak:
       name: https://flathub.org/repo/appstream/org.mozilla.firefox.flatpakref
       state: present
       method: system
@@ -94,8 +102,8 @@
       src: "files/ubuntu_things"
       dest: /home
 
-  - shell: "dpkg -i /home/ubuntu_things/*.deb"
+  - shell: "apt -y install /home/ubuntu_things/*.deb"
 
   - file:
       state: absent
-      directory: ~/ubuntu_things
+      path: ~/ubuntu_things
