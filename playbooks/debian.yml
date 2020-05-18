@@ -21,8 +21,19 @@
   - name: Install apps
     apt:
       update_cache: yes
-      name: rsync,vim,htop,zsh,python-pexpect,tlp,tlp-rdw,papirus-icon-theme,evolution,git,screen,vim-gtk,openssh-server,neofetch,flatpak
+      name: rsync,vim,htop,zsh,python-pexpect,tlp,tlp-rdw,papirus-icon-theme,evolution,git,screen,vim-gtk,openssh-server,neofetch,flatpak,gnome-software-plugin-flatpak
       state: present
+
+  - name: Install Flathub repository
+    shell: "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
+
+  - name: Install Spotify, Libreoffice, and Firefox Flatpak packages
+    flatpak:
+      name: https://flathub.org/repo/appstream/com.spotify.Client.flatpakref
+      name: https://flathub.org/repo/appstream/org.libreoffice.LibreOffice.flatpakref
+      name: https://flathub.org/repo/appstream/org.mozilla.firefox.flatpakref
+      state: present
+      method: system
 
 ## User being created with variables input at first prompts.
   - name: Add the user {{ user }}
