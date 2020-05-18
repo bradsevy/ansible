@@ -11,37 +11,6 @@
       prompt: "Enter the password to be applied to the account."
 
   tasks:
-  - name: Add Spotify repo key
-    apt_key:
-      url: "https://download.spotify.com/debian/pubkey.gpg"
-      state: present
-
-#  - name: Add Atom repo key
-#    apt_key:
-#      url: 'https://packagecloud.io/AtomEditor/atom/gpgkey'
-#      state: present
-
-  - name: Add VSCode repository
-    apt_key:
-      url: 'https://packages.microsoft.com/keys/microsoft.asc'
-      state: present
-
-  - name: Add Spotify repo
-    apt_repository:
-      repo: 'deb http://repository.spotify.com stable non-free'
-      state: present
-
-  - name: Add VSCode repository
-    apt_repository:
-      repo: 'deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main'
-      state: present
-
-#  - name: Add Atom repo
-#    apt_repository:
-#      repo: deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main
-#      filename: atom
-#      state: present
-
   - name: Add elementaryOS PPA (Ubuntu only)
     ignore_errors: yes
     apt_repository:
@@ -57,7 +26,7 @@
     ignore_errors: yes
     apt:
       update_cache: yes
-      name: vim,htop,code,alac-decoder,ubuntu-restricted-extras,noise,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,evolution-ews,libreoffice,ansible,git,screen,vim-gtk,openssh-server
+      name: vim,htop,alac-decoder,ubuntu-restricted-extras,noise,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,evolution-ews,libreoffice,ansible,git,screen,vim-gtk,openssh-server
       state: present
 
 ## User being created with variables input at first prompts.
@@ -88,14 +57,6 @@
       state: started
       enabled: yes
 
-  - name: Set GNOME preferences. Separately run "dconf load / < saved_settings" to take affect
-    copy:
-      src: "files/brad-settings.dconf"
-      dest: /home/{{ user }}/saved_settings.dconf
-      owner: "{{ user }}"
-      mode: '0644'
-      group: "{{ user }}"
-
   - name: Implement no-password sudo
     lineinfile:
       path: /etc/sudoers.d/{{ user }}
@@ -114,27 +75,6 @@
     synchronize:
       src: "files/zsh"
       dest: /usr/share/
-
-  - name: Creating GDM preference to set stock GNOME as default session for {{ user }}
-    copy:
-      src: "files/brad-default-session"
-      dest: /var/lib/AccountServices/users/{{ user }}/{{ user }}-default-session
-      owner: root
-      group: root
-      mode: '0644'
-
-  - name: Create .config folder in home directory to place setup-done file
-    file:
-      path: "/home/{{ user }}/.config"
-      state: directory
-      owner: "{{ user }}"
-
-  - name: Touch gnome-initial-setup-done in /home/{{ user }}/.config. This will allow the new account to slip the GNOME setup prompt.
-    file:
-      path: "/home/{{ user }}/.config/gnome-initial-setup-done"
-      state: touch
-      owner: "{{ user }}"
-      mode: '0644'
 
   - name: Clean up 'df' output by excludinh snap and tmpfs from output
     lineinfile:

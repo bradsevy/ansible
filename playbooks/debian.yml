@@ -8,27 +8,6 @@
       private: no
 
   tasks:
-  - name: Add Spotify repo key
-    apt_key:
-      url: "https://download.spotify.com/debian/pubkey.gpg"
-      state: present
-
-  - name: Add Atom repo key
-    apt_key:
-      url: 'https://packagecloud.io/AtomEditor/atom/gpgkey'
-      state: present
-
-  - name: Add Spotify repo
-    apt_repository:
-      repo: 'deb http://repository.spotify.com stable non-free'
-      state: present
-
-  - name: Add Atom repo
-    apt_repository:
-      repo: deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main
-      filename: atom
-      state: present
-
   - name: Remove unwanted pre-installed apps
     apt:
       name: gnome-calendar,gnome-clocks,gnome-color-manager,gnome-contacts,gnome-font-viewer,gnome-maps,gnome-music,gnome-sound-recorder,gnome-todo,gnome-weather,shotwell,rhythmbox,simple-scan,vinagre,aisleriot,five-or-more,four-in-a-row,gnome-chess,gnome-klotski,gnome-mahjongg,gnome-nibbles,gnome-robots,gnome-tetravex,hitori,hoichess,iagno,lightsoff,quadrapassell,swell-foop,tali
@@ -40,10 +19,9 @@
       autoremove: yes
 
   - name: Install apps
-    ignore_errors: yes
     apt:
       update_cache: yes
-      name: rsync,vim,htop,atom,zsh,python-pexpect,tlp,tlp-rdw,papirus-icon-theme,spotify-client,evolution,libreoffice,ansible,git,screen,vim-gtk,openssh-server,neofetch
+      name: rsync,vim,htop,zsh,python-pexpect,tlp,tlp-rdw,papirus-icon-theme,evolution,git,screen,vim-gtk,openssh-server,neofetch,flatpak
       state: present
 
 ## User being created with variables input at first prompts.
@@ -66,14 +44,6 @@
       name: sshd
       state: started
       enabled: yes
-
-  - name: Set GNOME preferences. Separately run "dconf load / < saved_settings" to take affect
-    copy:
-      src: "files/brad-settings.dconf"
-      dest: /home/{{ user }}/saved_settings.dconf
-      owner: "{{ user }}"
-      mode: '0644'
-      group: "{{ user }}"
 
   - name: Implement no-password sudo
     lineinfile:
@@ -103,20 +73,18 @@
       src: "files/yaru/themes"
       dest: /usr/share
 
-  - name: Create .config folder in home directory to place setup-done file
-    file:
-      path: "/home/{{ user }}/.config"
-      state: directory
-      owner: "{{ user }}"
-
-  - name: Touch gnome-initial-setup-done in /home/{{ user }}/.config. This will allow the new account to slip the GNOME setup prompt.
-    file:
-      path: "/home/{{ user }}/.config/gnome-initial-setup-done"
-      state: touch
-      owner: "{{ user }}"
-      mode: '0644'
-
   - name: Clean up 'df' output by excluding snap and tmpfs from output
     lineinfile:
       path: /home/{{ user }}/.zshrc
       line: alias dfh='df -h -x squashfs -x tmpfs'
+
+  - name: Install Ubuntu wallpapers
+    synchronize:
+      src: "files/ubuntu_things"
+      dest: /home
+
+  - shell: "dpkg -i /home/ubuntu_things/*.deb"
+
+  - file:
+      state: absent
+      directory: ~/ubuntu_things

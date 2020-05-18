@@ -7,7 +7,16 @@
       prompt: "What is the name of the account you wish to create?"
       private: no
 
+    - name: password
+      prompt: "Enter the password to be applied to the account."
+
   tasks:
+  - name: Add elementaryOS PPA (Ubuntu only)
+    ignore_errors: yes
+    apt_repository:
+      repo: ppa:elementary-os/stable
+      state: present
+
   - name: Upgrade existing packages, clear unused dependencies
     apt:
       upgrade: yes
@@ -17,19 +26,21 @@
     ignore_errors: yes
     apt:
       update_cache: yes
-      name: vim,htop,code,alac-decoder,ubuntu-restricted-extras,noise,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,evolution-ews,libreoffice,ansible,git,screen,vim-gtk,openssh-server
+      name: vim,htop,code,alac-decoder,ubuntu-restricted-extras,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,spotify-client,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,evolution-ews,libreoffice,ansible,git,screen,vim-gtk,openssh-server
       state: present
+
+## User being created with variables input at first prompts.
+  - name: Add the user "{{ user }}"
+    user:
+      name: "{{ user }}"
+      groups: sudo
+      create_home: yes
+      shell: /bin/zsh
 
 ## Comment out if not running against desktop.
   - name: Start TLP for power savings on portable computers
     service:
       name: tlp
-      state: started
-      enabled: yes
-
-  - name: Enable sshd for SSHing into this computer
-    service:
-      name: sshd
       state: started
       enabled: yes
 
@@ -52,7 +63,7 @@
       src: "files/zsh"
       dest: /usr/share/
 
-  - name: Clean up 'df' output by excluding snap and tmpfs from output
+  - name: Clean up 'df' output by excludinh snap and tmpfs from output
     lineinfile:
       path: /home/{{ user }}/.zshrc
       line: alias dfh='df -h -x squashfs -x tmpfs'
