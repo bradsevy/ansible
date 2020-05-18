@@ -21,13 +21,13 @@
   - name: Install apps
     apt:
       update_cache: yes
-      name: rsync,vim,htop,zsh,python-pexpect,tlp,tlp-rdw,papirus-icon-theme,evolution,git,screen,vim-gtk,openssh-server,neofetch,flatpak,gnome-software-plugin-flatpak
+      name: rsync,vim,htop,zsh,python-pexpect,tlp,tlp-rdw,papirus-icon-theme,evolution,git,screen,vim-gtk,openssh-server,neofetch,flatpak,gnome-software-plugin-flatpak,rhythmbox,vlc
       state: present
 
   - name: Install Flathub repository
     shell: "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
 
-  - name: Install Spotify, Libreoffice, and Firefox Flatpak packages
+  - name: Install some Flatpaks
     flatpak:
       name: https://flathub.org/repo/appstream/com.spotify.Client.flatpakref
       state: present
@@ -40,6 +40,11 @@
 
   - flatpak:
       name: https://flathub.org/repo/appstream/org.mozilla.firefox.flatpakref
+      state: present
+      method: system
+
+  - flatpak:
+      name: https://flathub.org/repo/appstream/io.atom.Atom.flatpakref
       state: present
       method: system
 
