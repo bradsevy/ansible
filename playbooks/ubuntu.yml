@@ -1,5 +1,13 @@
 - hosts: localhost
   connection: local
+  roles:
+  - role: gnome-extension
+    vars:
+      gnome_extension_ids:
+        - 1362
+        - 1723
+        - 1092
+        - 1036
   vars:
   vars_prompt:
 
@@ -11,12 +19,6 @@
       prompt: "Enter the password to be applied to the account."
 
   tasks:
-  - name: Add elementaryOS PPA (Ubuntu only)
-    ignore_errors: yes
-    apt_repository:
-      repo: ppa:elementary-os/stable
-      state: present
-
   - name: Upgrade existing packages, clear unused dependencies
     apt:
       upgrade: yes
@@ -26,7 +28,7 @@
     ignore_errors: yes
     apt:
       update_cache: yes
-      name: vim,htop,alac-decoder,ubuntu-restricted-extras,noise,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,tlp-rdw,powertop,papirus-icon-theme,xubuntu-wallpapers,gnome-session,ubuntu-wallpapers*,evolution,evolution-ews,libreoffice,ansible,git,screen,vim-gtk,openssh-server
+      name: vim,htop,alac-decoder,ubuntu-restricted-extras,zsh,python-pexpect,gnome-tweaks,gnome-tweak-tool,tlp,powertop,papirus-icon-theme,xubuntu-wallpapers,ubuntu-wallpapers*,evolution,git,screen,openssh-server
       state: present
 
 ## User being created with variables input at first prompts.
@@ -76,7 +78,7 @@
       src: "files/zsh"
       dest: /usr/share/
 
-  - name: Clean up 'df' output by excludinh snap and tmpfs from output
+  - name: Clean up 'df' output by excluding snap and tmpfs from output
     lineinfile:
       path: /home/{{ user }}/.zshrc
       line: alias dfh='df -h -x squashfs -x tmpfs'
