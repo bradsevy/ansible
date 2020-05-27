@@ -43,6 +43,25 @@
       responses:
         password: "{{ password }}"
         password: "{{ password }}"
+        
+  - name: Install Flathub repository
+    shell: "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
+
+  - name: Install some Flatpaks
+    flatpak:
+      name: https://flathub.org/repo/appstream/com.spotify.Client.flatpakref
+      state: present
+      method: system
+
+  - flatpak:
+      name: https://flathub.org/repo/appstream/org.mozilla.firefox.flatpakref
+      state: present
+      method: system
+
+  - flatpak:
+      name: https://flathub.org/repo/appstream/io.atom.Atom.flatpakref
+      state: present
+      method: system
 
 ## Comment out if not running against desktop.
   - name: Start TLP for power savings on portable computers
