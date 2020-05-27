@@ -75,6 +75,11 @@
     synchronize:
       src: "files/zsh"
       dest: /usr/share/
+      
+  - name: Importing Yaru theme. You know you want it.
+    synchronize:
+      src: "files/yaru/icons"
+      dest: /usr/share
 
   - name: Clean up 'df' output by excluding snap and tmpfs from output
     lineinfile:
