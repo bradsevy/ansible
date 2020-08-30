@@ -90,11 +90,11 @@
 
   - name: Importing Yaru theme. You know you want it.
     synchronize:
-      src: "files/yaru/icons"
+      src: "files/themes/icons"
       dest: /usr/share
 
   - synchronize: 
-      src: "files/yaru/themes"
+      src: "files/themes/themes"
       dest: /usr/share
 
   - name: Clean up 'df' output by excluding snap and tmpfs from output
